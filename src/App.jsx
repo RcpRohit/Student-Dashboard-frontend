@@ -17,13 +17,13 @@ function App() {
     profileImage: null, // File ठेवणार
   });
 
-  const API_BASE_URL = "https://student-dash-project-backend.vercel.app/api/students";
+  const API_BASE_URL = "http://localhost:5000/api/students";
 
   const fetchStudents = async () => {
   try {
     setLoading(true);
     setError("");
-    const response = await fetch(${API_BASE_URL}/getStudent);
+    const response = await fetch(`${API_BASE_URL}/getStudent`);
     if (!response.ok)
       throw new Error(`HTTP error! status: ${response.status}`);
     const data = await response.json();
@@ -87,7 +87,7 @@ function App() {
         formDataObj.append("profileImage", formData.profileImage);
       }
 
-      const res = await fetch(${API_BASE_URL}/addStudent, {
+      const res = await fetch(`${API_BASE_URL}/addStudent`, {
         method: "POST",
         body: formDataObj,
       });
@@ -144,7 +144,7 @@ function App() {
       }
 
       const res = await fetch(
-        ${API_BASE_URL}/updatedStudentById/${editingStudent._id},
+       ` ${API_BASE_URL}/updatedStudentById/${editingStudent._id}`,
         {
           method: "PUT",
           body: formDataObj,
@@ -184,7 +184,7 @@ function App() {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch(${API_BASE_URL}/DeleteStudentById/${id}, {
+      const res = await fetch(`${API_BASE_URL}/DeleteStudentById/${id}`, {
         method: "DELETE",
       });
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
