@@ -17,7 +17,7 @@ function App() {
     profileImage: null, // File ठेवणार
   });
 
-  const API_BASE_URL = "http://localhost:5000/api/students";
+  const API_BASE_URL = "https://student-dash-project-backend.vercel.app/api/students";
 
   const fetchStudents = async () => {
   try {
