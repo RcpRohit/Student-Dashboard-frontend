@@ -17,47 +17,48 @@ function App() {
     profileImage: null, // File ठेवणार
   });
 
-  const API_BASE_URL = "https://student-dash-project-backend.vercel.app/api/students";
+  const API_BASE_URL =
+    "https://student-dash-project-backend.vercel.app/api/students";
 
   const fetchStudents = async () => {
-  try {
-    setLoading(true);
-    setError("");
-    const response = await fetch(${API_BASE_URL}/getStudent);
-    if (!response.ok)
-      throw new Error(HTTP error! status: ${response.status});
-    const data = await response.json();
+    try {
+      setLoading(true);
+      setError("");
+      const response = await fetch(`${API_BASE_URL}/getStudent`);
+      if (!response.ok)
+        throw new Error(`HTTP error! status: ${response.status}`);
+      const data = await response.json();
 
-    // Convert buffer to base64 for displaying
-    const studentsWithImages = data.map((s) => {
-      let imageSrc = "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=150";
+      // Convert buffer to base64 for displaying
+      const studentsWithImages = data.map((s) => {
+        let imageSrc =
+          "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=150";
 
-      if (s.profileImage && s.profileImage.data) {
-        // Convert binary to base64
-        const base64String = btoa(
-          new Uint8Array(s.profileImage.data.data).reduce(
-            (data, byte) => data + String.fromCharCode(byte),
-            ""
-          )
-        );
-        imageSrc = data:${s.profileImage.contentType};base64,${base64String};
-      }
+        if (s.profileImage && s.profileImage.data) {
+          // Convert binary to base64
+          const base64String = btoa(
+            new Uint8Array(s.profileImage.data.data).reduce(
+              (data, byte) => data + String.fromCharCode(byte),
+              ""
+            )
+          );
+          imageSrc = `data:${s.profileImage.contentType};base64,${base64String}`;
+        }
 
-      return {
-        ...s,
-        profileImage: imageSrc,
-      };
-    });
+        return {
+          ...s,
+          profileImage: imageSrc,
+        };
+      });
 
-    setStudents(studentsWithImages);
-  } catch (err) {
-    console.error("Error fetching students:", err);
-    setError("Failed to fetch students. Please check server.");
-  } finally {
-    setLoading(false);
-  }
-};
-
+      setStudents(studentsWithImages);
+    } catch (err) {
+      console.error("Error fetching students:", err);
+      setError("Failed to fetch students. Please check server.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchStudents();
@@ -87,12 +88,12 @@ function App() {
         formDataObj.append("profileImage", formData.profileImage);
       }
 
-      const res = await fetch(${API_BASE_URL}/addStudent, {
+      const res = await fetch(`${API_BASE_URL}/addStudent`, {
         method: "POST",
         body: formDataObj,
       });
 
-      if (!res.ok) throw new Error(HTTP error! status: ${res.status});
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
       const newStudent = await res.json();
 
       setStudents([
@@ -144,14 +145,14 @@ function App() {
       }
 
       const res = await fetch(
-        ${API_BASE_URL}/updatedStudentById/${editingStudent._id},
+        `${API_BASE_URL}/updatedStudentById/${editingStudent._id}`,
         {
           method: "PUT",
           body: formDataObj,
         }
       );
 
-      if (!res.ok) throw new Error(HTTP error! status: ${res.status});
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
       const updatedStudent = await res.json();
 
       setStudents(
@@ -184,10 +185,10 @@ function App() {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch(${API_BASE_URL}/DeleteStudentById/${id}, {
+      const res = await fetch(`${API_BASE_URL}/DeleteStudentById/${id}`, {
         method: "DELETE",
       });
-      if (!res.ok) throw new Error(HTTP error! status: ${res.status});
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
       setStudents(students.filter((s) => s._id !== id));
       if (selectedStudent?._id === id) setActiveSection("list");
     } catch (err) {
@@ -245,11 +246,17 @@ function App() {
           >
             <option value="">Select Course</option>
             <option value="Computer Science">Computer Science</option>
-            <option value="Information Technology">Information Technology</option>
+            <option value="Information Technology">
+              Information Technology
+            </option>
             <option value="Electronics">Electronics</option>
-            <option value="Mechanical Engineering">Mechanical Engineering</option>
+            <option value="Mechanical Engineering">
+              Mechanical Engineering
+            </option>
             <option value="Civil Engineering">Civil Engineering</option>
-            <option value="Business Administration">Business Administration</option>
+            <option value="Business Administration">
+              Business Administration
+            </option>
           </select>
         </div>
         <div className="form-group">
@@ -350,10 +357,7 @@ function App() {
     if (!selectedStudent) return <p>No student selected.</p>;
     return (
       <div className="view-container">
-        <button
-          className="btn-back"
-          onClick={() => setActiveSection("list")}
-        >
+        <button className="btn-back" onClick={() => setActiveSection("list")}>
           ← Back to List
         </button>
         <div className="student-detail-card">
@@ -365,7 +369,9 @@ function App() {
             />
             <div className="student-title">
               <h1>{selectedStudent.name}</h1>
-              <p className="student-id">Student ID: {selectedStudent._id}</p>
+              <p className="student-id">
+                Student ID: {selectedStudent._id}
+              </p>
             </div>
           </div>
           <div className="student-details">
