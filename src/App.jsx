@@ -23,9 +23,9 @@ function App() {
   try {
     setLoading(true);
     setError("");
-    const response = await fetch(`${API_BASE_URL}/getStudent`);
+    const response = await fetch(${API_BASE_URL}/getStudent);
     if (!response.ok)
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(HTTP error! status: ${response.status});
     const data = await response.json();
 
     // Convert buffer to base64 for displaying
@@ -40,7 +40,7 @@ function App() {
             ""
           )
         );
-        imageSrc = `data:${s.profileImage.contentType};base64,${base64String}`;
+        imageSrc = data:${s.profileImage.contentType};base64,${base64String};
       }
 
       return {
@@ -87,12 +87,12 @@ function App() {
         formDataObj.append("profileImage", formData.profileImage);
       }
 
-      const res = await fetch(`${API_BASE_URL}/addStudent`, {
+      const res = await fetch(${API_BASE_URL}/addStudent, {
         method: "POST",
         body: formDataObj,
       });
 
-      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      if (!res.ok) throw new Error(HTTP error! status: ${res.status});
       const newStudent = await res.json();
 
       setStudents([
@@ -144,14 +144,14 @@ function App() {
       }
 
       const res = await fetch(
-        `${API_BASE_URL}/updatedStudentById/${editingStudent._id}`,
+        ${API_BASE_URL}/updatedStudentById/${editingStudent._id},
         {
           method: "PUT",
           body: formDataObj,
         }
       );
 
-      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      if (!res.ok) throw new Error(HTTP error! status: ${res.status});
       const updatedStudent = await res.json();
 
       setStudents(
@@ -184,10 +184,10 @@ function App() {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch(`${API_BASE_URL}/DeleteStudentById/${id}`, {
+      const res = await fetch(${API_BASE_URL}/DeleteStudentById/${id}, {
         method: "DELETE",
       });
-      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      if (!res.ok) throw new Error(HTTP error! status: ${res.status});
       setStudents(students.filter((s) => s._id !== id));
       if (selectedStudent?._id === id) setActiveSection("list");
     } catch (err) {
